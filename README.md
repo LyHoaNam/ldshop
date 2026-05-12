@@ -1,3 +1,5 @@
+# 🤙 Đã fix cái quán ăn nè, nhớ dùng `quan-an.json` để import rồi xài nè. 
+
 # 🍚 Tiệm Cơm Nam Vinh - Đường Đua Lấy Cơm
 
 A fun, lightweight racing game website to randomly select someone to pick up lunch at Tiệm Cơm Nam Vinh.
