@@ -1,0 +1,581 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Be+Vietnam+Pro:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: #3B2A1A;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Header Banner */
+.header-banner {
+    background: #B03020;
+    border-bottom: 5px solid #FFCD00;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 4px 12px rgba(218, 37, 29, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.header-banner::before,
+.header-banner::after {
+    content: '🏮';
+    position: absolute;
+    font-size: 2.5rem;
+    animation: sway 3s ease-in-out infinite;
+}
+
+.header-banner::before {
+    top: 10px;
+    left: 20px;
+}
+
+.header-banner::after {
+    top: 10px;
+    right: 20px;
+    animation-delay: 1.5s;
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.shop-photo, .owner-photo {
+    width: 120px;
+    height: 120px;
+    border: 4px solid #FFCD00;
+    border-radius: 12px;
+    background: #8B4513;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF8E7;
+    font-size: 0.8rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.shop-photo img,
+.owner-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.owner-photo {
+    border-radius: 50%;
+}
+
+.header-title {
+    flex: 1;
+    text-align: center;
+    color: #FFF8E7;
+}
+
+.header-title h1 {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.header-title p {
+    font-size: 1rem;
+    opacity: 0.95;
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+}
+
+/* Control Panel */
+.control-panel {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 3px solid #FFCD00;
+}
+
+.btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #B03020;
+    color: white;
+    border: 3px solid #C89B3C;
+    box-shadow: 0 4px 8px rgba(176, 48, 32, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(218, 37, 29, 0.4), 0 0 20px rgba(255, 205, 0, 0.6);
+}
+
+.btn-secondary {
+    background: #FFCD00;
+    color: #DA251D;
+    border: 2px solid #DA251D;
+}
+
+.btn-secondary:hover {
+    background: #FFE066;
+    transform: translateY(-2px);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Race Track */
+.race-track {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 3px solid #FFCD00;
+    position: relative;
+    min-height: 400px;
+}
+
+.race-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.start-flag, .finish-flag {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.start-flag span, .finish-flag span {
+    display: block;
+    font-size: 0.9rem;
+    color: #8B4513;
+    font-weight: 700;
+}
+
+.lane {
+    position: relative;
+    height: 80px;
+    margin-bottom: 4px;
+    background: #8A8060;
+    border-radius: 0;
+    border: none;
+    overflow: hidden;
+}
+
+.lane:nth-child(even) {
+    background: #7A7050;
+}
+
+.racer {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: left 0.05s linear;
+    z-index: 10;
+}
+
+.racer-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    border: 3px solid #dbbfd4;
+    background: #FFFFEB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+}
+
+.racer-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.racer-name {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-weight: 700;
+    color: #8B4513;
+    border: 2px solid #FFCD00;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.running-animation {
+    font-size: 2rem;
+    animation: bounce 0.3s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.speed-lines {
+    position: absolute;
+    left: -30px;
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+/* Winner Modal */
+.winner-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.winner-content {
+    background: #F5E6C8;
+    border: none;
+    border-radius: 0;
+    padding: 3rem;
+    text-align: center;
+    max-width: 500px;
+    animation: modalPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes modalPop {
+    0% { transform: scale(0.3) rotate(-10deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.winner-content h2 {
+    font-size: 2.5rem;
+    color: #DA251D;
+    margin-bottom: 1.5rem;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.winner-avatar {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    border: 5px solid #FFCD00;
+    background: #DA251D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    box-shadow: 0 4px 16px rgba(218, 37, 29, 0.4);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.winner-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.winner-name {
+    font-size: 2rem;
+    color: #8B4513;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.winner-message {
+    font-size: 1.3rem;
+    color: #8B4513;
+    margin-bottom: 2rem;
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: #FFCD00;
+    animation: confettiFall 3s linear;
+    pointer-events: none;
+}
+
+@keyframes confettiFall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Racer Management */
+.racer-management {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 3px solid #FFCD00;
+}
+
+.racer-management h2 {
+    color: #DA251D;
+    margin-bottom: 1.5rem;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+.racer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.racer-card {
+    background: #EDD9A3;
+    border: 2px solid #C89B3C;
+    border-radius: 0;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.racer-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(218, 37, 29, 0.2);
+}
+
+.racer-card.selected {
+    border: 3px solid #B03020;
+    background: #C89B3C;
+}
+
+.racer-card-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 0.5rem;
+    border-radius: 100%;
+    border: 3px solid #dbbfd4;
+    background: #FFFFEB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.racer-card-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.racer-card-name {
+    font-weight: 700;
+    color: #8B4513;
+    margin-bottom: 0.5rem;
+}
+
+.racer-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-small {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+}
+
+/* Add Racer Form */
+.add-racer-form {
+    background: #FFF8E7;
+    border: 2px dashed #FFCD00;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    color: #8B4513;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #FFCD00;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+.avatar-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.avatar-option {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #FFCD00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: white;
+}
+
+.avatar-option:hover {
+    transform: scale(1.1);
+    border-color: #DA251D;
+}
+
+.avatar-option.selected {
+    border: 3px solid #DA251D;
+    background: #FFE9B3;
+}
+
+/* Import/Export */
+.import-export {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #8B4513;
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+    }
+
+    .shop-photo, .owner-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .header-title h1 {
+        font-size: 1.5rem;
+    }
+
+    .racer-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .winner-content {
+        padding: 2rem;
+        margin: 1rem;
+    }
+
+    .winner-content h2 {
+        font-size: 2rem;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}

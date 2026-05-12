@@ -1,0 +1,76 @@
+{
+  "version": "1.0",
+  "exportDate": "2026-05-11T00:00:00Z",
+  "racers": [
+    {
+      "id": 1,
+      "name": "Bà chủ nè",
+      "avatar": "assets/avatars/bachune.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Giao nè",
+      "avatar": "assets/avatars/giaoquynh.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Hùng Sơn",
+      "avatar": "assets/avatars/hungson.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "Khách Cát",
+      "avatar": "assets/avatars/khanhcat.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Bóng Hè",
+      "avatar": "assets/avatars/kimhong.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 6,
+      "name": "Nem nè",
+      "avatar": "assets/avatars/namne.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 7,
+      "name": "Tâm Lê",
+      "avatar": "assets/avatars/tamle.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 8,
+      "name": "Quân Huỳnh",
+      "avatar": "assets/avatars/quanhuynh.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 9,
+      "name": "Thư nè",
+      "avatar": "assets/avatars/thunguyen.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 10,
+      "name": "Tiên Bùi",
+      "avatar": "assets/avatars/tienbui.png",
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiệm Cơm Nam Vinh - Đường Đua Lấy Cơm</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/pixel-art.css">
+</head>
+<body>
+    <!-- Header Banner -->
+    <div class="header-banner" style="background-image: url('assets/images/header-bg.gif');">
+        <div class="header-content">
+            <div class="shop-photo">
+                <img src="assets/images/shop.gif" alt="Tiệm Cơm Nam Vinh" onerror="this.parentElement.innerHTML='<div>Tiệm Cơm<br>Nam Vinh<br><small>(Thêm ảnh)</small></div>'">
+            </div>
+            <div class="header-title">
+                <h1>🍚 TIEM CO'M NAM VINH 🍚</h1>
+                <p>Chi nhánh Teq | Bà chủ: Linh Đa</p>
+                <p style="font-size: 0.9rem; margin-top: 0.3rem;">✨ Hôm nay ai đi lấy cơm trưa nè! ✨</p>
+            </div>
+            <div class="owner-photo">
+                <img src="assets/images/owner.gif" alt="Bà chủ Linh Đa" onerror="this.parentElement.innerHTML='<div>Bà chủ<br>Linh Đa<br><small>(Thêm ảnh)</small></div>'">
+            </div>
+        </div>
+    </div>
+    <div class="container-bg" style="background-image: url('assets/images/bg.gif');">
+        <div class="container">
+            <!-- Mode Tabs -->
+            <div class="mode-tabs" id="modeTabs">
+                <button class="mode-tab active" id="tabPeople" onclick="switchMode('people')">👤 Người đua</button>
+                <button class="mode-tab" id="tabStores" onclick="switchMode('stores')">🏪 Quán ăn</button>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="button-group">
+                    <button class="btn btn-primary" id="startBtn" onclick="startRace()">
+                        🏁 BẮT ĐẦU ĐUA!
+                    </button>
+                    <button class="btn btn-secondary" id="managePeopleBtn" onclick="toggleManagement()">
+                        👥 Quản lý người đua
+                    </button>
+                    <button class="btn btn-secondary hidden" id="manageStoresBtn" onclick="toggleStoreManagement()">
+                        🏪 Quản lý quán ăn
+                    </button>
+                    <button class="btn btn-secondary" onclick="resetRace()">
+                        🔄 Làm mới
+                    </button>
+                </div>
+            </div>
+
+            <!-- Race Track -->
+            <div class="race-track" id="raceTrack">
+                <div class="race-header">
+                    <div class="start-flag">
+                        🏁
+                        <span>BẮT ĐẦU</span>
+                    </div>
+                    <div class="finish-flag">
+                        🍚
+                        <span>CƠM!</span>
+                    </div>
+                </div>
+                <div id="lanes"></div>
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-state-icon"><img src="assets/images/runner-sprite.gif" width="120" height="120" alt="Chưa có người đua" /></div>
+                    <h3>Chưa có người đua!</h3>
+                    <p>Thêm người đua để bắt đầu cuộc đua nhé!</p>
+                    <button class="btn btn-primary" onclick="toggleManagement()">
+                        ➕ Thêm người đua
+                    </button>
+                </div>
+            </div>
+
+            <!-- Store Management -->
+            <div class="racer-management hidden" id="storeManagement">
+                <h2>🏪 Quản lý quán ăn</h2>
+
+                <!-- Add New Store -->
+                <div class="add-racer-form">
+                    <h3 style="color: #B03020; margin-bottom: 1rem;">➕ Thêm quán mới</h3>
+                    <div class="form-group">
+                        <label>Tên quán:</label>
+                        <input type="text" id="newStoreName" placeholder="Nhập tên quán...">
+                    </div>
+                    <div class="form-group">
+                        <label>Chọn icon quán:</label>
+                        <div class="avatar-picker" id="storeEmojiPicker"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tags (phân cách bằng dấu phẩy):</label>
+                        <input type="text" id="newStoreTags" placeholder="cơm, bún, phở...">
+                    </div>
+                    <button class="btn btn-primary" onclick="addStore()">Thêm quán ăn</button>
+                </div>
+
+                <!-- Store List -->
+                <h3 style="color: #5C3A1E; margin-bottom: 1rem;">Danh sách quán ăn (Chọn để tham gia đua):</h3>
+                <div class="racer-grid" id="storeGrid"></div>
+
+                <!-- Import/Export -->
+                <div class="import-export">
+                    <button class="btn btn-secondary" onclick="exportStoreData()">
+                        💾 Xuất dữ liệu JSON
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('storeImportFile').click()">
+                        📂 Nhập từ JSON
+                    </button>
+                    <input type="file" id="storeImportFile" accept=".json" class="hidden" onchange="importStoreData(event)">
+                </div>
+            </div>
+
+            <!-- Racer Management -->
+            <div class="racer-management hidden" id="racerManagement">
+                <h2>👥 Quản lý người đua</h2>
+                
+                <!-- Add New Racer -->
+                <div class="add-racer-form">
+                    <h3 style="color: #DA251D; margin-bottom: 1rem;">➕ Thêm người mới</h3>
+                    <div class="form-group">
+                        <label>Tên người đua:</label>
+                        <input type="text" id="newRacerName" placeholder="Nhập tên...">
+                    </div>
+                    <div class="form-group">
+                        <label>Chọn avatar:</label>
+                        <div class="avatar-picker" id="avatarPicker"></div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addRacer()">Thêm người đua</button>
+                </div>
+
+                <!-- Racer List -->
+                <h3 style="color: #8B4513; margin-bottom: 1rem;">Danh sách người đua (Chọn để tham gia đua):</h3>
+                <div class="racer-grid" id="racerGrid"></div>
+
+                <!-- Import/Export -->
+                <div class="import-export">
+                    <button class="btn btn-secondary" onclick="exportData()">
+                        💾 Xuất dữ liệu JSON
+                    </button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">
+                        📂 Nhập từ JSON
+                    </button>
+                    <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Winner Modal -->
+    <div class="winner-modal" id="winnerModal">
+        <div class="winner-content">
+            <h2 id="winnerTitle">👑 NGƯỜI MAY MẮN 👑</h2>
+            <div class="winner-avatar" id="winnerAvatar"><img src="" alt="Winner Avatar" /></div>
+            <div class="winner-name" id="winnerName"></div>
+            <div class="winner-tags hidden" id="winnerTags"></div>
+            <div class="winner-message" id="winnerMessage">🍚 Hôm nay bạn lấy cơm nhé! 🥢</div>
+            <div class="button-group" style="margin-top: 1.5rem;">
+                <button class="btn btn-primary" onclick="closeWinnerModal()">
+                    🏁 Đua lại
+                </button>
+                <button class="btn btn-secondary" id="winnerSecondaryBtn" onclick="closeWinnerModal(); toggleManagement()">
+                    👥 Chọn người khác
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/stores.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/race.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
