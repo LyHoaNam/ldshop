@@ -90,10 +90,12 @@ class UIManager {
 
         if (!lanes || !emptyState) return;
 
+        // Clear existing lanes completely
+        lanes.innerHTML = '';
+
         const selectedRacers = dataManager.getSelectedRacers();
 
         if (selectedRacers.length === 0) {
-            lanes.innerHTML = '';
             emptyState.style.display = 'block';
             return;
         }
@@ -122,10 +124,12 @@ class UIManager {
 
         if (!lanes || !emptyState) return;
 
+        // Clear existing lanes completely
+        lanes.innerHTML = '';
+
         const selectedStores = storeManager.getSelectedStores();
 
         if (selectedStores.length === 0) {
-            lanes.innerHTML = '';
             emptyState.style.display = 'block';
             return;
         }
@@ -322,10 +326,12 @@ class UIManager {
         if (racerPanel) racerPanel.classList.add('hidden');
         if (storePanel) storePanel.classList.add('hidden');
 
-        // Update race track for new mode
+        // Refresh management grids for the new mode
         if (mode === 'stores') {
+            this.renderStoreGrid();
             this.updateRaceTrackForStores();
         } else {
+            this.renderRacerGrid();
             this.updateRaceTrack();
         }
 

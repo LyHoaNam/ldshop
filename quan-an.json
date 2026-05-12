@@ -1,0 +1,142 @@
+{
+  "version": "1.0",
+  "exportDate": "2026-05-11T00:00:00Z",
+  "stores": [
+    {
+      "id": 1,
+      "name": "Cơm gà Zeus",
+      "emoji": "🍗",
+      "tags": ["cơm", "gà"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 2,
+      "name": "Chay Tâm An",
+      "emoji": "🥗",
+      "tags": ["chay", "vegetarian"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 3,
+      "name": "Cơm tấm Long Xuyên",
+      "emoji": "🍚",
+      "tags": ["cơm tấm", "cơm"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 4,
+      "name": "KEMI - Mỳ ý",
+      "emoji": "🍝",
+      "tags": ["mỳ ý", "pasta"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 5,
+      "name": "Cơm gà Phú Yên - Xô viết nghệ tĩnh",
+      "emoji": "🍗",
+      "tags": ["cơm", "gà"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 6,
+      "name": "Bún chả Hà Nội Bà Hảo",
+      "emoji": "🍜",
+      "tags": ["bún chả", "bún"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 7,
+      "name": "Mỳ trộn, bún trộn - Gác lửng",
+      "emoji": "🍜",
+      "tags": ["mỳ trộn", "bún trộn"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 8,
+      "name": "Bún xì dầu",
+      "emoji": "🍜",
+      "tags": ["bún", "xì dầu"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 9,
+      "name": "Bò kho cô Tám",
+      "emoji": "🥘",
+      "tags": ["bò kho", "bò"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 10,
+      "name": "Tiệm chay chữa lành - Vegetarian Food",
+      "emoji": "🥗",
+      "tags": ["chay", "vegetarian"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 11,
+      "name": "Cơm chiên A Lúi",
+      "emoji": "🍚",
+      "tags": ["cơm chiên", "cơm"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 12,
+      "name": "Cơm mì Malai",
+      "emoji": "🍱",
+      "tags": ["cơm", "mì"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 13,
+      "name": "Nem nướng Nha Trang",
+      "emoji": "🍗",
+      "tags": ["nem nướng", "nướng"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 14,
+      "name": "Bánh canh cua bà Ba",
+      "emoji": "🍲",
+      "tags": ["bánh canh", "cua"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 15,
+      "name": "Cơm thố Trường An",
+      "emoji": "🍚",
+      "tags": ["cơm", "thố"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 16,
+      "name": "Cơm chiên, Mì xào",
+      "emoji": "🍱",
+      "tags": ["cơm chiên", "mì xào"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    },
+    {
+      "id": 17,
+      "name": "Cơm tấm Phúc Lộc Thọ/ Tài",
+      "emoji": "🍚",
+      "tags": ["cơm tấm", "cơm"],
+      "wins": 0,
+      "createdAt": "2026-05-11T00:00:00Z"
+    }
+  ]
+}

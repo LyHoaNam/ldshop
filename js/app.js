@@ -19,6 +19,9 @@ class App {
         uiManager.initStoreEmojiPicker();
         uiManager.renderStoreGrid();
 
+        // Explicitly set initial mode (people)
+        uiManager.switchMode('people');
+
         // Check URL parameters
         this.checkUrlParameters();
 
