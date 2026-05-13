@@ -518,6 +518,19 @@ class UIManager {
         this.renderRacerGrid();
         this.updateRaceTrack();
     }
+
+    /**
+     * Apply runtime settings from SettingsManager
+     * @param {object} data
+     */
+    static applySettings(data) {
+        if (!data) return;
+        if (data.confetti) {
+            CONFIG.confetti = Object.assign({}, CONFIG.confetti, data.confetti);
+        }
+        // re-render anything UI-specific if needed
+        this.initializeAvatarPicker();
+    }
 }
 
 // Create global UI manager instance

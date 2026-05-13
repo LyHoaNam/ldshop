@@ -191,6 +191,28 @@ class StoreManager {
         localStorage.removeItem(CONFIG.storage.storeData);
         console.log('Store data reset');
     }
+
+    /**
+     * Select stores by exact names array
+     * @param {string[]} names
+     */
+    selectStoresByNames(names) {
+        if (!Array.isArray(names) || names.length === 0) return;
+        const set = new Set(names.map(n => n.trim()));
+        this.selectedStores = this.stores.filter(s => set.has(s.name));
+        console.log('Selected stores by names:', this.selectedStores.map(s=>s.name));
+    }
+
+    /**
+     * Select stores by IDs array
+     * @param {(number|string)[]} ids
+     */
+    selectStoresByIds(ids) {
+        if (!Array.isArray(ids) || ids.length === 0) return;
+        const idSet = new Set(ids.map(i => Number(i)));
+        this.selectedStores = this.stores.filter(s => idSet.has(Number(s.id)));
+        console.log('Selected stores by ids:', this.selectedStores.map(s=>s.id));
+    }
 }
 
 // Global store manager instance

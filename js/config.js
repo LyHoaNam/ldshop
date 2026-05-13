@@ -17,7 +17,7 @@ const CONFIG = {
     // Race configuration
     race: {
         minRacers: 2,
-        maxRacers: 8,
+        maxRacers: 20,
         baseSpeed: 10, // base pixels per frame
         speedVariation: 3,
         animationSpeed: 20, // milliseconds per frame
@@ -74,6 +74,7 @@ const CONFIG = {
     storage: {
         racerData: 'racerData',
         storeData: 'storeData',
+        appConfig: 'appConfig',
     },
 
     // UI elements
@@ -112,3 +113,21 @@ let currentMode = 'people';
 
 // Log configuration loaded
 console.log('Configuration loaded');
+
+// Editable defaults for settings modal (subset of CONFIG that users can change)
+CONFIG.DEFAULTS = {
+    race: {
+        baseSpeed: CONFIG.race.baseSpeed,
+        speedVariation: CONFIG.race.speedVariation,
+        animationSpeed: CONFIG.race.animationSpeed
+    },
+    confetti: {
+        count: CONFIG.confetti.count,
+        colors: CONFIG.confetti.colors,
+        duration: CONFIG.confetti.duration
+    },
+    ui: {
+        minRacers: CONFIG.race.minRacers,
+        maxRacers: CONFIG.race.maxRacers
+    }
+};

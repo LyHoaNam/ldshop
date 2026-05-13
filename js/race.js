@@ -238,10 +238,68 @@ class RaceEngine {
 const raceEngine = new RaceEngine();
 
 /**
+ * Update runtime race settings from SettingsManager
+ * @param {object} data
+ */
+RaceEngine.prototype.updateSettings = function(data){
+    if (!data || !data.race) return;
+    CONFIG.race = Object.assign({}, CONFIG.race, data.race);
+};
+
+/**
  * Global function to start race
  */
 function startRace() {
     raceEngine.startRace();
+}
+
+/**
+ * Start race with options (used by URL-start wrapper)
+ * @param {object} opts - { force: boolean, runnerId: number|string, runner: string, mode: 'stores'|'people' }
+ */
+function startRaceWithOptions(opts = {}) {
+    const mode = opts.mode === 'stores' ? 'stores' : 'people';
+    if (mode === 'stores') {
+        uiManager.switchMode('stores');
+    } else {
+        uiManager.switchMode('people');
+    }
+
+    // If runnerId or runner name provided, select appropriate participant(s)
+    if (opts.runnerId) {
+        const id = Number(opts.runnerId);
+        if (mode === 'stores') {
+            storeManager.selectStoresByIds([id]);
+            uiManager.renderStoreGrid();
+            uiManager.updateRaceTrackForStores();
+        } else {
+            dataManager.selectRacersByIds([id]);
+            uiManager.renderRacerGrid();
+            uiManager.updateRaceTrack();
+        }
+    } else if (opts.runner) {
+        const name = String(opts.runner).trim();
+        if (mode === 'stores') {
+            storeManager.selectStoresByNames([name]);
+            uiManager.renderStoreGrid();
+            uiManager.updateRaceTrackForStores();
+        } else {
+            dataManager.selectRacersByNames([name]);
+            uiManager.renderRacerGrid();
+            uiManager.updateRaceTrack();
+        }
+    }
+
+    // If force flag set, bypass participant count checks by temporarily adjusting CONFIG
+    if (opts.force) {
+        const originalMin = CONFIG.race.minRacers;
+        CONFIG.race.minRacers = 0;
+        setTimeout(() => raceEngine.startRace(), 250);
+        // restore after a short delay
+        setTimeout(() => { CONFIG.race.minRacers = originalMin; }, 2000);
+    } else {
+        setTimeout(() => raceEngine.startRace(), 250);
+    }
 }
 
 /**

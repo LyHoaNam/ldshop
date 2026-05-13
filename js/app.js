@@ -43,6 +43,10 @@ class App {
         const autoStart = params.get('start') === 'true';
         const racerNames = params.get('racers');
         const includeAll = params.get('all') === 'true';
+        const runner = params.get('runner');
+        const runnerId = params.get('runnerId');
+        const forceStart = params.get('force') === 'true';
+        const storeNames = params.get('stores');
 
         // Handle racer pre-selection
         if (includeAll) {
@@ -55,6 +59,25 @@ class App {
                 names.includes(r.name)
             );
             dataManager.selectedRacers = selectedRacers;
+        } else if (runnerId) {
+            // Select by single runner id
+            dataManager.selectRacersByIds([runnerId]);
+        } else if (runner) {
+            dataManager.selectRacersByNames([runner]);
+        }
+
+        // If mode is stores, support `stores` param to select stores
+        if (mode === 'stores') {
+            if (storeNames === 'all') {
+                storeManager.selectedStores = [...storeManager.getAllStores()];
+            } else if (storeNames) {
+                const names = storeNames.split(',').map(n => n.trim());
+                storeManager.selectStoresByNames(names);
+            }
+            if (storeManager.getSelectedStores().length > 0) {
+                uiManager.renderStoreGrid();
+                uiManager.updateRaceTrackForStores();
+            }
         }
 
         // Update UI after selection
@@ -64,11 +87,17 @@ class App {
         }
 
         // Auto-start race if requested and valid
-        if (autoStart && dataManager.selectedRacers.length >= CONFIG.race.minRacers) {
-            setTimeout(() => {
-                console.log('Auto-starting race from URL parameter');
-                raceEngine.startRace();
-            }, 500);
+        // Auto-start race if requested
+        if (autoStart) {
+            console.log('Auto-start requested via URL');
+            const opts = {};
+            if (forceStart) opts.force = true;
+            if (runner) opts.runner = runner;
+            if (runnerId) opts.runnerId = runnerId;
+            if (mode === 'stores') opts.mode = 'stores';
+
+            // If explicit runner/store selection was made above, start with options
+            startRaceWithOptions(opts);
         }
     }
 

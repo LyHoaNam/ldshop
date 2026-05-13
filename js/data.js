@@ -214,6 +214,28 @@ class DataManager {
         localStorage.removeItem(CONFIG.storage.racerData);
         console.log('All data reset');
     }
+
+    /**
+     * Select racers by exact names array (case-sensitive match)
+     * @param {string[]} names
+     */
+    selectRacersByNames(names) {
+        if (!Array.isArray(names) || names.length === 0) return;
+        const set = new Set(names.map(n => n.trim()));
+        this.selectedRacers = this.racers.filter(r => set.has(r.name));
+        console.log('Selected racers by names:', this.selectedRacers.map(r=>r.name));
+    }
+
+    /**
+     * Select racers by IDs array
+     * @param {(number|string)[]} ids
+     */
+    selectRacersByIds(ids) {
+        if (!Array.isArray(ids) || ids.length === 0) return;
+        const idSet = new Set(ids.map(i => Number(i)));
+        this.selectedRacers = this.racers.filter(r => idSet.has(Number(r.id)));
+        console.log('Selected racers by ids:', this.selectedRacers.map(r=>r.id));
+    }
 }
 
 // Create global data manager instance
