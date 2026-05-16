@@ -1,242 +1,195 @@
 /**
  * Data Management Module
- * Handles CRUD operations for racers and storage
+ * Handles runner CRUD, runner.json read/write, and localStorage fallback.
  */
 
 class DataManager {
     constructor() {
         this.racers = [];
         this.selectedRacers = [];
-        this.selectedAvatar = CONFIG.avatarEmojis[0];
+        this.selectedAvatar = 'assets/avatars/bachune.png';
+        this.fileHandle = null;
     }
 
-    /**
-     * Load racers from localStorage
-     */
-    loadData() {
+    async loadData() {
         try {
             const data = localStorage.getItem(CONFIG.storage.racerData);
             if (data) {
                 this.racers = JSON.parse(data);
-                console.log('Data loaded from localStorage:', this.racers);
+                console.log('Runner data loaded from localStorage:', this.racers);
+                return true;
+            }
+
+            const response = await fetch(CONFIG.files.racerData);
+            if (response.ok) {
+                const json = await response.json();
+                this.importFromJSON(json, { persist: false });
+                this.saveData();
+                console.log('Runner data loaded from JSON seed:', this.racers);
                 return true;
             }
         } catch (error) {
-            console.error('Error loading data:', error);
+            console.error('Error loading runner data:', error);
         }
         return false;
     }
 
-    /**
-     * Save racers to localStorage
-     */
     saveData() {
         try {
             localStorage.setItem(CONFIG.storage.racerData, JSON.stringify(this.racers));
-            console.log('Data saved to localStorage');
             return true;
         } catch (error) {
-            console.error('Error saving data:', error);
+            console.error('Error saving runner data:', error);
             return false;
         }
     }
 
-    /**
-     * Add a new racer
-     * @param {string} name - Racer name
-     * @param {string} avatar - Avatar emoji
-     * @returns {object|null} - New racer object or null if failed
-     */
-    addRacer(name, avatar) {
-        // Validate input
-        if (!name || !name.trim()) {
-            throw new Error('Tên người đua không được để trống!');
-        }
+    exportDocument() {
+        return {
+            version: '1.0',
+            exportDate: new Date().toISOString(),
+            racers: this.racers
+        };
+    }
 
-        if (this.racers.find(r => r.name === name)) {
-            throw new Error('Tên này đã tồn tại!');
-        }
+    exportToJSON() {
+        return JSON.stringify(this.exportDocument(), null, 2);
+    }
 
+    async persistToFileIfAvailable() {
+        this.saveData();
+        if (this.fileHandle) {
+            await JsonFileManager.write(this.fileHandle, this.exportDocument());
+        }
+    }
+
+    async openRunnerFile() {
+        this.fileHandle = await JsonFileManager.openJsonFile();
+        const data = await JsonFileManager.read(this.fileHandle);
+        this.importFromJSON(data);
+        return this.racers;
+    }
+
+    validateRacerInput(name, avatar) {
+        const trimmed = String(name || '').trim();
+        const cleanAvatar = String(avatar || '').trim();
+        if (!trimmed) throw new Error('Ten runner khong duoc de trong.');
+        if (!cleanAvatar) throw new Error('Avatar/path khong duoc de trong.');
+
+        const duplicate = this.racers.find(r => r.name.toLowerCase() === trimmed.toLowerCase());
+        if (duplicate) throw new Error(`Runner "${trimmed}" da ton tai.`);
+
+        return { name: trimmed, avatar: cleanAvatar };
+    }
+
+    nextId() {
+        return this.racers.reduce((max, racer) => Math.max(max, Number(racer.id) || 0), 0) + 1;
+    }
+
+    async addRacer(name, avatar) {
+        const valid = this.validateRacerInput(name, avatar);
         const newRacer = {
-            id: Date.now(),
-            name: name.trim(),
-            avatar: avatar || CONFIG.avatarEmojis[0],
+            id: this.nextId(),
+            name: valid.name,
+            avatar: valid.avatar,
             wins: 0,
             createdAt: new Date().toISOString()
         };
 
         this.racers.push(newRacer);
-        this.saveData();
-        console.log('Racer added:', newRacer);
+        await this.persistToFileIfAvailable();
         return newRacer;
     }
 
-    /**
-     * Delete a racer by ID
-     * @param {number} id - Racer ID
-     * @returns {boolean} - Success status
-     */
-    deleteRacer(id) {
+    async deleteRacer(id) {
+        const numberId = Number(id);
         const initialLength = this.racers.length;
-        this.racers = this.racers.filter(r => r.id !== id);
-        
-        // Also remove from selected racers
-        this.selectedRacers = this.selectedRacers.filter(r => r.id !== id);
-        
+        this.racers = this.racers.filter(r => Number(r.id) !== numberId);
+        this.selectedRacers = this.selectedRacers.filter(r => Number(r.id) !== numberId);
         if (this.racers.length < initialLength) {
-            this.saveData();
-            console.log('Racer deleted with ID:', id);
+            await this.persistToFileIfAvailable();
             return true;
         }
         return false;
     }
 
-    /**
-     * Get racer by ID
-     * @param {number} id - Racer ID
-     * @returns {object|null} - Racer object or null
-     */
     getRacerById(id) {
-        return this.racers.find(r => r.id === id) || null;
+        return this.racers.find(r => Number(r.id) === Number(id)) || null;
     }
 
-    /**
-     * Get all racers
-     * @returns {array} - Array of racers
-     */
     getAllRacers() {
         return this.racers;
     }
 
-    /**
-     * Get selected racers
-     * @returns {array} - Array of selected racers
-     */
     getSelectedRacers() {
         return this.selectedRacers;
     }
 
-    /**
-     * Toggle racer selection
-     * @param {number} id - Racer ID
-     */
     toggleRacerSelection(id) {
         const racer = this.getRacerById(id);
         if (!racer) return;
 
-        const index = this.selectedRacers.findIndex(r => r.id === id);
+        const index = this.selectedRacers.findIndex(r => Number(r.id) === Number(id));
         if (index > -1) {
             this.selectedRacers.splice(index, 1);
         } else {
             this.selectedRacers.push(racer);
         }
-        console.log('Racer selection toggled, selected count:', this.selectedRacers.length);
     }
 
-    /**
-     * Clear selected racers
-     */
     clearSelection() {
         this.selectedRacers = [];
     }
 
-    /**
-     * Update racer wins
-     * @param {number} id - Racer ID
-     */
-    addWin(id) {
+    async addWin(id) {
         const racer = this.getRacerById(id);
         if (racer) {
             racer.wins = (racer.wins || 0) + 1;
-            this.saveData();
-            console.log(`Racer ${racer.name} won! Total wins: ${racer.wins}`);
+            await this.persistToFileIfAvailable();
         }
     }
 
-    /**
-     * Set selected avatar
-     * @param {string} avatar - Avatar emoji
-     */
     setSelectedAvatar(avatar) {
-        if (CONFIG.avatarEmojis.includes(avatar)) {
-            this.selectedAvatar = avatar;
+        this.selectedAvatar = String(avatar || '').trim();
+    }
+
+    importFromJSON(data, options = {}) {
+        if (!data || !Array.isArray(data.racers)) {
+            throw new Error('File JSON khong hop le. Can co truong "racers".');
         }
-    }
 
-    /**
-     * Export data as JSON
-     * @returns {string} - JSON string
-     */
-    exportToJSON() {
-        const data = {
-            version: '1.0',
-            exportDate: new Date().toISOString(),
-            racers: this.racers
-        };
-        return JSON.stringify(data, null, 2);
-    }
-
-    /**
-     * Import data from JSON
-     * @param {object} data - Parsed JSON data
-     * @returns {boolean} - Success status
-     */
-    importFromJSON(data) {
-        try {
-            if (!data.racers || !Array.isArray(data.racers)) {
-                throw new Error('Invalid JSON format');
+        data.racers.forEach(racer => {
+            if (!racer.name || typeof racer.name !== 'string') {
+                throw new Error('Runner data khong hop le.');
             }
+        });
 
-            // Validate racer objects
-            data.racers.forEach(racer => {
-                if (!racer.name || typeof racer.name !== 'string') {
-                    throw new Error('Invalid racer data');
-                }
-            });
-
-            this.racers = data.racers;
+        this.racers = data.racers;
+        this.selectedRacers = [];
+        if (options.persist !== false) {
             this.saveData();
-            console.log('Data imported successfully');
-            return true;
-        } catch (error) {
-            console.error('Import error:', error);
-            throw new Error('Lỗi nhập dữ liệu: ' + error.message);
         }
+        return true;
     }
 
-    /**
-     * Reset all data
-     */
     resetAll() {
         this.racers = [];
         this.selectedRacers = [];
-        this.selectedAvatar = CONFIG.avatarEmojis[0];
         localStorage.removeItem(CONFIG.storage.racerData);
-        console.log('All data reset');
     }
 
-    /**
-     * Select racers by exact names array (case-sensitive match)
-     * @param {string[]} names
-     */
     selectRacersByNames(names) {
         if (!Array.isArray(names) || names.length === 0) return;
         const set = new Set(names.map(n => n.trim()));
         this.selectedRacers = this.racers.filter(r => set.has(r.name));
-        console.log('Selected racers by names:', this.selectedRacers.map(r=>r.name));
     }
 
-    /**
-     * Select racers by IDs array
-     * @param {(number|string)[]} ids
-     */
     selectRacersByIds(ids) {
         if (!Array.isArray(ids) || ids.length === 0) return;
         const idSet = new Set(ids.map(i => Number(i)));
         this.selectedRacers = this.racers.filter(r => idSet.has(Number(r.id)));
-        console.log('Selected racers by ids:', this.selectedRacers.map(r=>r.id));
     }
 }
 
-// Create global data manager instance
 const dataManager = new DataManager();
+

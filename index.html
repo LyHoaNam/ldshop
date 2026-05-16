@@ -1,218 +1,295 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tiệm Cơm Nam Vinh - Đường Đua Lấy Cơm</title>
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/pixel-art.css">
-</head>
-<body>
-    <!-- Header Banner -->
-    <div class="header-banner" style="background-image: url('assets/images/header-bg.gif');">
-        <div class="header-content">
-            <div class="shop-photo">
-                <img src="assets/images/shop.gif" alt="Tiệm Cơm Nam Vinh" onerror="this.parentElement.innerHTML='<div>Tiệm Cơm<br>Nam Vinh<br><small>(Thêm ảnh)</small></div>'">
-            </div>
-            <div class="header-title">
-                <h1>🍚 TIEM CO'M NAM VINH 🍚</h1>
-                <p>Chi nhánh Teq | Bà chủ: Linh Đa</p>
-                <p style="font-size: 0.9rem; margin-top: 0.3rem;">✨ Hôm nay ai đi lấy cơm trưa nè! ✨</p>
-            </div>
-            <div class="owner-photo">
-                <img src="assets/images/owner.gif" alt="Bà chủ Linh Đa" onerror="this.parentElement.innerHTML='<div>Bà chủ<br>Linh Đa<br><small>(Thêm ảnh)</small></div>'">
-            </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiem Com Nam Vinh - Duong Dua Lay Com</title>
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/pixel-art.css" />
+  </head>
+  <body>
+    <div class="header-banner" style="background-image: url('assets/images/header-bg.gif')">
+      <div class="header-content">
+        <div class="shop-photo">
+          <img src="assets/images/shop.gif" alt="Tiem Com Nam Vinh" />
         </div>
+        <div class="header-title">
+          <h1>TIEM COM NAM VINH</h1>
+          <p>Chi nhanh Teq | Ba chu: Linh Da</p>
+          <p style="font-size: 0.9rem; margin-top: 0.3rem">Hom nay ai di lay com trua ne!</p>
+        </div>
+        <div class="owner-photo" onclick="revealAdminLogin()" title="Admin login">
+          <img src="assets/images/owner.gif" alt="Ba chu Linh Da" />
+        </div>
+      </div>
+      <div class="daily-banner" id="dailyBanner">
+        <div class="daily-info">
+          <span class="daily-label">Link dat com hom nay</span>
+          <span id="dailyOrderLink">Admin chua cap nhat link dat com hom nay.</span>
+        </div>
+        <div class="daily-info">
+          <span class="daily-label">Nguoi nhan com</span>
+          <span id="dailyPickupPerson">Chua chon nguoi nhan com hom nay.</span>
+        </div>
+      </div>
     </div>
-    <div class="container-bg" style="background-image: url('assets/images/bg.gif');">
-        <div class="container">
-            <!-- Mode Tabs -->
-            <div class="mode-tabs" id="modeTabs">
-                <button class="mode-tab active" id="tabPeople" onclick="switchMode('people')">👤 Người đua</button>
-                <button class="mode-tab" id="tabStores" onclick="switchMode('stores')">🏪 Quán ăn</button>
-            </div>
 
-            <!-- Control Panel -->
-            <div class="control-panel">
-                <div class="button-group">
-                    <button class="btn btn-primary" id="startBtn" onclick="startRace()">
-                        🏁 BẮT ĐẦU ĐUA!
-                    </button>
-                    <button class="btn btn-secondary" id="managePeopleBtn" onclick="toggleManagement()">
-                        👥 Quản lý người đua
-                    </button>
-                    <button class="btn btn-secondary hidden" id="manageStoresBtn" onclick="toggleStoreManagement()">
-                        🏪 Quản lý quán ăn
-                    </button>
-                    <button class="btn btn-secondary" id="openSettingsBtn" onclick="openSettingsModal()">
-                        ⚙️ Cài đặt
-                    </button>
-                    <button class="btn btn-secondary" onclick="resetRace()">
-                        🔄 Làm mới
-                    </button>
+    <div class="container-bg" style="background-image: url('assets/images/bg.gif')">
+      <div class="container app-shell">
+        <main class="app-main">
+          <div class="control-panel app-admin-panel hidden" id="adminPanel">
+            <div class="admin-login-row" id="adminLoginRow">
+              <input type="password" id="adminPasswordInput" placeholder="Mat khau admin" />
+              <button class="btn btn-primary" onclick="loginAdmin()">Dang nhap admin</button>
+            </div>
+            <div class="admin-tools hidden" id="adminTools">
+              <div class="admin-status">Admin mode dang bat</div>
+              <div class="form-group">
+                <label>Link order com hom nay:</label>
+                <input type="url" id="dailyOrderInput" placeholder="https://..." />
+              </div>
+              <div class="button-group">
+                <button class="btn btn-primary" onclick="saveDailyOrderLink()">Luu link order</button>
+                <button class="btn btn-secondary" onclick="resetDailyState()">Reset hom nay</button>
+                <button class="btn btn-secondary" id="openSettingsBtn" onclick="openSettingsModal()">Cai dat</button>
+                <button class="btn btn-secondary" onclick="logoutAdmin()">Dang xuat</button>
+              </div>
+            </div>
+          </div>
+
+          <section class="racer-management" id="userFoodSection">
+            <h2>Quan an</h2>
+            <div class="section-tabs">
+              <button class="section-tab active" onclick="showPanelTab('userFoodSection','userStoreListPane')">Danh sach quan an</button>
+              <button class="section-tab" onclick="showPanelTab('userFoodSection','userRequestPane')">Request quan an moi</button>
+              <button class="section-tab" onclick="showPanelTab('userFoodSection','userMyRequestsPane')">Danh sach da request</button>
+            </div>
+            <div class="tab-pane active" id="userStoreListPane">
+              <div class="racer-grid" id="storeGrid"></div>
+            </div>
+            <div class="tab-pane" id="userRequestPane">
+              <div class="add-racer-form">
+                <h3>Gui request quan moi</h3>
+                <div class="form-group">
+                  <label>Ten quan:</label>
+                  <input type="text" id="requestStoreName" placeholder="Nhap ten quan..." />
                 </div>
+                <div class="form-group">
+                  <label>Icon quan:</label>
+                  <div class="avatar-picker" id="requestStoreEmojiPicker"></div>
+                </div>
+                <div class="form-group">
+                  <label>Tags:</label>
+                  <input type="text" id="requestStoreTags" placeholder="com, bun, pho..." />
+                </div>
+                <div class="form-group">
+                  <label>Ghi chu:</label>
+                  <input type="text" id="requestStoreNote" placeholder="Dia chi, mon nen goi..." />
+                </div>
+                <div class="button-group">
+                  <button class="btn btn-primary" onclick="submitStoreRequest()">Gui request</button>
+                </div>
+              </div>
             </div>
+            <div class="tab-pane" id="userMyRequestsPane">
+              <div id="myStoreRequestList" class="request-list"></div>
+            </div>
+          </section>
 
-            <!-- Race Track -->
-            <div class="race-track" id="raceTrack">
+          <section class="racer-management admin-only hidden" id="storeManagement">
+            <h2>Quan ly quan an</h2>
+            <div class="button-group">
+              <button class="btn btn-secondary" onclick="exportStoreData()">Export quan-an.json</button>
+              <input type="file" id="storeImportFile" accept=".json" class="hidden" onchange="importStoreData(event)" />
+            </div>
+            <div class="section-tabs">
+              <button class="section-tab active" onclick="showPanelTab('storeManagement','adminSelectStorePane')">Chon quan an hom nay</button>
+              <button class="section-tab" onclick="showPanelTab('storeManagement','adminStoreRequestsPane')">User request quan an</button>
+              <button class="section-tab" onclick="showPanelTab('storeManagement','adminAddStorePane')">Add quan moi</button>
+              <button class="section-tab" onclick="showPanelTab('storeManagement','adminCurrentStoresPane')">Danh sach hien tai</button>
+            </div>
+            <div class="tab-pane active" id="adminSelectStorePane">
+              <h3>Danh sach quan user recommend</h3>
+              <div id="adminRecommendedStores"></div>
+              <h3>Chon quan an hom nay</h3>
+              <div class="racer-grid" id="adminStoreSelectGrid"></div>
+              <div class="control-panel compact-panel">
+                <div class="button-group">
+                  <button class="btn btn-primary" onclick="startStoreRace()">Dua chon quan hom nay</button>
+                  <button class="btn btn-secondary" onclick="resetRace()">Lam moi</button>
+                </div>
+              </div>
+              <div class="race-track" id="storeRaceTrack">
                 <div class="race-header">
-                    <div class="start-flag">
-                        🏁
-                        <span>BẮT ĐẦU</span>
-                    </div>
-                    <div class="finish-flag">
-                        🍚
-                        <span>CƠM!</span>
-                    </div>
+                  <div class="start-flag">Start</div>
+                  <div class="finish-flag">Quan!</div>
+                </div>
+                <div id="storeLanes"></div>
+                <div class="empty-state" id="storeEmptyState">
+                  <div class="empty-state-icon">🍚</div>
+                  <h3>Chua chon quan</h3>
+                  <p>Admin chon danh sach quan an hom nay de bat dau race.</p>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="adminStoreRequestsPane">
+              <div id="storeRequestList" class="request-list"></div>
+            </div>
+            <div class="tab-pane" id="adminAddStorePane">
+              <div class="add-racer-form">
+                <h3>Them quan moi</h3>
+                <div class="form-group">
+                  <label>Ten quan:</label>
+                  <input type="text" id="newStoreName" placeholder="Nhap ten quan..." />
+                </div>
+                <div class="form-group">
+                  <label>Icon quan:</label>
+                  <div class="avatar-picker" id="storeEmojiPicker"></div>
+                </div>
+                <div class="form-group">
+                  <label>Tags:</label>
+                  <input type="text" id="newStoreTags" placeholder="com, bun, pho..." />
+                </div>
+                <button class="btn btn-primary" onclick="addStore()">Them quan an</button>
+              </div>
+            </div>
+            <div class="tab-pane" id="adminCurrentStoresPane">
+              <div class="racer-grid" id="adminStoreManageGrid"></div>
+            </div>
+          </section>
+
+          <section class="racer-management admin-only hidden" id="racerManagement">
+            <h2>Quan ly nguoi dua</h2>
+            <div class="button-group">
+              <button class="btn btn-secondary" onclick="openRunnerJsonFile()">Mo file runner.json</button>
+              <button class="btn btn-secondary" onclick="exportData()">Export runner.json</button>
+              <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)" />
+            </div>
+            <p class="helper-text" id="runnerFileStatus">Chua mo file runner.json. Thay doi se luu localStorage va co the export JSON.</p>
+            <div class="section-tabs">
+              <button class="section-tab active" onclick="showPanelTab('racerManagement','adminSelectRunnerPane')">Select runner daily</button>
+              <button class="section-tab" onclick="showPanelTab('racerManagement','adminAddRunnerPane')">Add runner</button>
+            </div>
+            <div class="tab-pane active" id="adminSelectRunnerPane">
+              <div class="racer-grid" id="racerGrid"></div>
+              <div class="control-panel compact-panel">
+                <div class="button-group">
+                  <button class="btn btn-primary" id="startBtn" onclick="startRace()">Bat dau dua</button>
+                  <button class="btn btn-secondary" onclick="resetRace()">Lam moi</button>
+                </div>
+              </div>
+              <div class="race-track" id="raceTrack">
+                <div class="race-header">
+                  <div class="start-flag">Start</div>
+                  <div class="finish-flag">Com!</div>
                 </div>
                 <div id="lanes"></div>
                 <div class="empty-state" id="emptyState">
-                    <div class="empty-state-icon"><img src="assets/images/runner-sprite.gif" width="120" height="120" alt="Chưa có người đua" /></div>
-                    <h3>Chưa có người đua!</h3>
-                    <p>Thêm người đua để bắt đầu cuộc đua nhé!</p>
-                    <button class="btn btn-primary" onclick="toggleManagement()">
-                        ➕ Thêm người đua
-                    </button>
+                  <div class="empty-state-icon">
+                    <img src="assets/images/runner-sprite.gif" width="120" height="120" alt="Chua co nguoi dua" />
+                  </div>
+                  <h3>Chua chon runner</h3>
+                  <p>Admin chon danh sach nguoi order de bat dau race.</p>
                 </div>
+              </div>
             </div>
-
-            <!-- Store Management -->
-            <div class="racer-management hidden" id="storeManagement">
-                <h2>🏪 Quản lý quán ăn</h2>
-
-                <!-- Add New Store -->
-                <div class="add-racer-form">
-                    <h3 style="color: #B03020; margin-bottom: 1rem;">➕ Thêm quán mới</h3>
-                    <div class="form-group">
-                        <label>Tên quán:</label>
-                        <input type="text" id="newStoreName" placeholder="Nhập tên quán...">
-                    </div>
-                    <div class="form-group">
-                        <label>Chọn icon quán:</label>
-                        <div class="avatar-picker" id="storeEmojiPicker"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tags (phân cách bằng dấu phẩy):</label>
-                        <input type="text" id="newStoreTags" placeholder="cơm, bún, phở...">
-                    </div>
-                    <button class="btn btn-primary" onclick="addStore()">Thêm quán ăn</button>
+            <div class="tab-pane" id="adminAddRunnerPane">
+              <div class="add-racer-form">
+                <h3>Them runner</h3>
+                <div class="form-group">
+                  <label>Ten runner:</label>
+                  <input type="text" id="newRacerName" placeholder="Nhap ten..." />
                 </div>
-
-                <!-- Store List -->
-                <h3 style="color: #5C3A1E; margin-bottom: 1rem;">Danh sách quán ăn (Chọn để tham gia đua):</h3>
-                <div class="racer-grid" id="storeGrid"></div>
-
-                <!-- Import/Export -->
-                <div class="import-export">
-                    <button class="btn btn-secondary" onclick="exportStoreData()">
-                        💾 Xuất dữ liệu JSON
-                    </button>
-                    <button class="btn btn-secondary" onclick="document.getElementById('storeImportFile').click()">
-                        📂 Nhập từ JSON
-                    </button>
-                    <input type="file" id="storeImportFile" accept=".json" class="hidden" onchange="importStoreData(event)">
+                <div class="form-group">
+                  <label>Avatar path:</label>
+                  <input type="text" id="newRacerAvatar" placeholder="assets/avatars/name.png" />
                 </div>
+                <button class="btn btn-primary" onclick="addRacer()">Them runner</button>
+              </div>
             </div>
+          </section>
+        </main>
 
-            <!-- Racer Management -->
-            <div class="racer-management hidden" id="racerManagement">
-                <h2>👥 Quản lý người đua</h2>
-                
-                <!-- Add New Racer -->
-                <div class="add-racer-form">
-                    <h3 style="color: #DA251D; margin-bottom: 1rem;">➕ Thêm người mới</h3>
-                    <div class="form-group">
-                        <label>Tên người đua:</label>
-                        <input type="text" id="newRacerName" placeholder="Nhập tên...">
-                    </div>
-                    <div class="form-group">
-                        <label>Chọn avatar:</label>
-                        <div class="avatar-picker" id="avatarPicker"></div>
-                    </div>
-                    <button class="btn btn-primary" onclick="addRacer()">Thêm người đua</button>
-                </div>
-
-                <!-- Racer List -->
-                <h3 style="color: #8B4513; margin-bottom: 1rem;">Danh sách người đua (Chọn để tham gia đua):</h3>
-                <div class="racer-grid" id="racerGrid"></div>
-
-                <!-- Import/Export -->
-                <div class="import-export">
-                    <button class="btn btn-secondary" onclick="exportData()">
-                        💾 Xuất dữ liệu JSON
-                    </button>
-                    <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">
-                        📂 Nhập từ JSON
-                    </button>
-                    <input type="file" id="importFile" accept=".json" class="hidden" onchange="importData(event)">
-                </div>
-            </div>
-        </div>
+        <aside class="app-sidebar">
+          <section class="sidebar-section">
+            <h2>Khao sat quan muon an hom nay</h2>
+            <select id="surveyStoreSelect" class="survey-multiselect" multiple></select>
+            <button class="btn btn-primary" onclick="submitDailySurvey()">Gui khao sat</button>
+            <p class="helper-text" id="surveyHint"></p>
+          </section>
+          <section class="sidebar-section">
+            <h2>Bang xep hang</h2>
+            <div id="surveySummary"></div>
+            <button class="btn btn-secondary" id="rankingLoadMoreBtn" onclick="toggleRankingFull()">Xem them</button>
+          </section>
+        </aside>
+      </div>
     </div>
 
-    <!-- Winner Modal -->
     <div class="winner-modal" id="winnerModal">
-        <div class="winner-content">
-            <h2 id="winnerTitle">👑 NGƯỜI MAY MẮN 👑</h2>
-            <div class="winner-avatar" id="winnerAvatar"><img src="" alt="Winner Avatar" /></div>
-            <div class="winner-name" id="winnerName"></div>
-            <div class="winner-tags hidden" id="winnerTags"></div>
-            <div class="winner-message" id="winnerMessage">🍚 Hôm nay bạn lấy cơm nhé! 🥢</div>
-            <div class="button-group" style="margin-top: 1.5rem;">
-                <button class="btn btn-primary" onclick="closeWinnerModal()">
-                    🏁 Đua lại
-                </button>
-                <button class="btn btn-secondary" id="winnerSecondaryBtn" onclick="closeWinnerModal(); toggleManagement()">
-                    👥 Chọn người khác
-                </button>
-            </div>
+      <div class="winner-content">
+        <h2 id="winnerTitle">NGUOI MAY MAN</h2>
+        <div class="winner-avatar" id="winnerAvatar">
+          <img src="" alt="Winner Avatar" />
         </div>
+        <div class="winner-name" id="winnerName"></div>
+        <div class="winner-tags hidden" id="winnerTags"></div>
+        <div class="winner-message" id="winnerMessage">Hom nay ban la nguoi nhan com.</div>
+        <div class="button-group" style="margin-top: 1.5rem">
+          <button class="btn btn-primary" onclick="closeWinnerModal()">Dong</button>
+          <button class="btn btn-secondary" id="winnerSecondaryBtn" onclick="closeWinnerModal()">Chon lai</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Settings Modal -->
     <div class="settings-modal hidden" id="settingsModal">
-        <div class="settings-content">
-            <h2>Cài đặt ứng dụng</h2>
-            <form id="settingsForm">
-                <h3>Đua</h3>
-                <div class="form-row">
-                    <label>Base speed:</label>
-                    <input type="number" id="setting_race_baseSpeed" min="1">
-                </div>
-                <div class="form-row">
-                    <label>Speed variation:</label>
-                    <input type="number" id="setting_race_speedVariation" min="0">
-                </div>
-                <div class="form-row">
-                    <label>Animation speed (ms):</label>
-                    <input type="number" id="setting_race_animationSpeed" min="1">
-                </div>
+      <div class="settings-content">
+        <h2>Cai dat ung dung</h2>
+        <form id="settingsForm">
+          <h3>Dua</h3>
+          <div class="form-row">
+            <label>Base speed:</label>
+            <input type="number" id="setting_race_baseSpeed" min="1" />
+          </div>
+          <div class="form-row">
+            <label>Speed variation:</label>
+            <input type="number" id="setting_race_speedVariation" min="0" />
+          </div>
+          <div class="form-row">
+            <label>Animation speed (ms):</label>
+            <input type="number" id="setting_race_animationSpeed" min="1" />
+          </div>
 
-                <h3>Confetti</h3>
-                <div class="form-row">
-                    <label>Count:</label>
-                    <input type="number" id="setting_confetti_count" min="0">
-                </div>
-                <div class="form-row">
-                    <label>Duration (ms):</label>
-                    <input type="number" id="setting_confetti_duration" min="0">
-                </div>
+          <h3>Confetti</h3>
+          <div class="form-row">
+            <label>Count:</label>
+            <input type="number" id="setting_confetti_count" min="0" />
+          </div>
+          <div class="form-row">
+            <label>Duration (ms):</label>
+            <input type="number" id="setting_confetti_duration" min="0" />
+          </div>
 
-                <div class="form-actions">
-                    <button type="button" class="btn btn-primary" id="saveSettingsBtn">Lưu</button>
-                    <button type="button" class="btn btn-secondary" id="resetSettingsBtn">Khôi phục mặc định</button>
-                    <button type="button" class="btn" id="closeSettingsBtn">Đóng</button>
-                </div>
-            </form>
-        </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-primary" id="saveSettingsBtn">Luu</button>
+            <button type="button" class="btn btn-secondary" id="resetSettingsBtn">Khoi phuc mac dinh</button>
+            <button type="button" class="btn" id="closeSettingsBtn">Dong</button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/daily-state.js"></script>
+    <script src="js/file-json.js"></script>
     <script src="js/data.js"></script>
     <script src="js/stores.js"></script>
+    <script src="js/store-requests.js"></script>
+    <script src="js/survey.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/race.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/app.js"></script>
-</body>
+  </body>
 </html>

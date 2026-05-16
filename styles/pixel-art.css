@@ -493,3 +493,35 @@ body {
     font-size: 0.7rem;
     padding: 0.3rem 0.5rem;
 }
+
+.daily-banner,
+.request-item,
+.survey-row,
+.sidebar-section,
+.section-tab,
+.survey-option {
+    border-radius: 0;
+    box-shadow: 3px 3px 0 0 #3B1F0A;
+}
+
+.admin-login-row input,
+.form-group select,
+.survey-multiselect {
+    border-radius: 0;
+    border: 2px solid #f05050;
+    background: #F5E6C8;
+    box-shadow: 2px 2px 0 0 #7A1A10;
+}
+
+.daily-label,
+.admin-status,
+.helper-text,
+.card-stat,
+.selected-label {
+    font-family: 'Nunito', sans-serif;
+}
+
+.pickup-person img {
+    border-radius: 0;
+    box-shadow: 2px 2px 0 0 #3B1F0A;
+}
