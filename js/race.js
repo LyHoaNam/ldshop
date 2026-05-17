@@ -15,6 +15,11 @@ class RaceEngine {
     startRace() {
         if (this.isRacing) return;
 
+        if (currentMode === 'people' && !AuthManager.isAdmin()) {
+            alert('Chi admin moi duoc chay race chon nguoi nhan com.');
+            return;
+        }
+
         const participants = currentMode === 'stores'
             ? storeManager.getSelectedStores()
             : dataManager.getSelectedRacers();
@@ -34,6 +39,20 @@ class RaceEngine {
         this.runRace(participants, currentMode);
     }
 
+    getTrackElements(mode = currentMode) {
+        if (mode === 'stores') {
+            return {
+                track: document.getElementById('storeRaceTrack'),
+                lanes: document.getElementById('storeLanes')
+            };
+        }
+
+        return {
+            track: document.querySelector(CONFIG.selectors.raceTrack),
+            lanes: document.querySelector(CONFIG.selectors.lanes)
+        };
+    }
+
     /**
      * Route to DOM or canvas renderer
      * @param {array} participants - Racers or stores
@@ -45,7 +64,7 @@ class RaceEngine {
         if (startBtn) startBtn.disabled = true;
 
         // Activate scrolling lane animation
-        const track = document.querySelector(CONFIG.selectors.raceTrack);
+        const { track } = this.getTrackElements(mode);
         if (track) track.classList.add('racing');
 
         if (CONFIG.renderer.useCanvas) {
@@ -61,8 +80,11 @@ class RaceEngine {
      * @param {string} mode
      */
     runRaceDom(participants, mode) {
-        const racerElements = document.querySelectorAll('.racer');
-        const laneWidth = document.querySelector('.lane')?.offsetWidth - 150 || 1000;
+        const { lanes } = this.getTrackElements(mode);
+        if (!lanes) return;
+
+        const racerElements = lanes.querySelectorAll('.racer');
+        const laneWidth = lanes.querySelector('.lane')?.offsetWidth - 150 || 1000;
         const positions = Array(racerElements.length).fill(0);
         const speeds = participants.map(() =>
             CONFIG.race.baseSpeed + (Math.random() * CONFIG.race.speedVariation)
@@ -101,8 +123,7 @@ class RaceEngine {
      * @param {string} mode
      */
     runRaceCanvas(participants, mode) {
-        const track = document.querySelector(CONFIG.selectors.raceTrack);
-        const lanesContainer = document.querySelector(CONFIG.selectors.lanes);
+        const { track, lanes: lanesContainer } = this.getTrackElements(mode);
         if (!track || !lanesContainer) return;
 
         lanesContainer.innerHTML = '';
@@ -189,14 +210,16 @@ class RaceEngine {
      * @param {object} winner - Winner object (racer or store)
      * @param {string} mode   - 'people' | 'stores'
      */
-    finishRace(winner, mode = 'people') {
+    async finishRace(winner, mode = 'people') {
         if (!winner) return;
 
         // Update win count
         if (mode === 'stores') {
-            storeManager.addWin(winner.id);
+            await storeManager.addWin(winner.id);
         } else {
-            dataManager.addWin(winner.id);
+            await dataManager.addWin(winner.id);
+            dailyStateManager.setPickupPerson(winner);
+            uiManager.renderDailyBanner();
         }
 
         // Show winner modal
@@ -214,8 +237,10 @@ class RaceEngine {
         if (startBtn) startBtn.disabled = false;
 
         // Remove scrolling animation
-        const track = document.querySelector(CONFIG.selectors.raceTrack);
-        if (track) track.classList.remove('racing');
+        const peopleTrack = document.querySelector(CONFIG.selectors.raceTrack);
+        const storeTrack = document.getElementById('storeRaceTrack');
+        if (peopleTrack) peopleTrack.classList.remove('racing');
+        if (storeTrack) storeTrack.classList.remove('racing');
 
         // Restore correct track for current mode
         if (currentMode === 'stores') {
@@ -236,6 +261,7 @@ class RaceEngine {
 
 // Create global race engine instance
 const raceEngine = new RaceEngine();
+window.RaceEngine = RaceEngine;
 
 /**
  * Update runtime race settings from SettingsManager
