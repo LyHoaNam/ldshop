@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Runners: anyone reads; writes require valid shape
+    match /runners/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.avatarUrl is string
+                    && request.resource.data.wins is int;
+      allow update: if request.resource.data.name is string
+                    && request.resource.data.wins is int;
+      allow delete: if true;
+    }
+
+    // Stores: anyone reads; writes require valid shape
+    match /stores/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.emoji is string
+                    && request.resource.data.wins is int;
+      allow update: if request.resource.data.wins is int;
+      allow delete: if true;
+    }
+
+    // App documents (dailyState, settings): anyone reads/writes
+    match /app/{docId} {
+      allow read: if true;
+      allow write: if docId in ['dailyState', 'settings'];
+    }
+
+    // Survey: anyone reads/writes today's document
+    match /survey/{date} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Store requests: anyone reads/creates; updates only change status field
+    match /storeRequests/{id} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string
+                    && request.resource.data.name.size() > 0
+                    && request.resource.data.status == 'pending';
+      allow update: if request.resource.data.status in ['pending', 'approved', 'rejected'];
+    }
+  }
+}

@@ -5,70 +5,70 @@
     {
       "id": 1,
       "name": "Bà chủ nè",
-      "avatar": "assets/avatars/bachune.png",
+      "avatar": "/public/avatars/bachune.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 2,
       "name": "Giao nè",
-      "avatar": "assets/avatars/giaoquynh.png",
+      "avatar": "/public/avatars/giaoquynh.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 3,
       "name": "Hùng Sơn",
-      "avatar": "assets/avatars/hungson.png",
+      "avatar": "/public/avatars/hungson.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 4,
       "name": "Khách Cát",
-      "avatar": "assets/avatars/khanhcat.png",
+      "avatar": "/public/avatars/khanhcat.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 5,
       "name": "Bóng Hè",
-      "avatar": "assets/avatars/kimhong.png",
+      "avatar": "/public/avatars/kimhong.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 6,
       "name": "Nem nè",
-      "avatar": "assets/avatars/namne.png",
+      "avatar": "/public/avatars/namne.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 7,
       "name": "Tâm Lê",
-      "avatar": "assets/avatars/tamle.png",
+      "avatar": "/public/avatars/tamle.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 8,
       "name": "Quân Huỳnh",
-      "avatar": "assets/avatars/quanhuynh.png",
+      "avatar": "/public/avatars/quanhuynh.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 9,
       "name": "Thư nè",
-      "avatar": "assets/avatars/thunguyen.png",
+      "avatar": "/public/avatars/thunguyen.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     },
     {
       "id": 10,
       "name": "Tiên Bùi",
-      "avatar": "assets/avatars/tienbui.png",
+      "avatar": "/public/avatars/tienbui.png",
       "wins": 0,
       "createdAt": "2026-05-11T00:00:00Z"
     }
