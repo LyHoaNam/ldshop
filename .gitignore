@@ -1,0 +1,21 @@
+node_modules
+bun.lock
+.env
+.env.local
+.env.*.local
+.env.setup
+dist
+coverage
+deploy/k8s.yml
+.DS_Store
+*/.DS_Store
+
+# Craft Agent
+.claude-plugin/
+.claude
+labels/
+sessions/
+statuses/
+events.jsonl
+views.json
+config.json
