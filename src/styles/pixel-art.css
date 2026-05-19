@@ -521,7 +521,54 @@ body {
     font-family: 'Nunito', sans-serif;
 }
 
-.pickup-person img {
+/* ── Pickup card pixel overrides ── */
+.pickup-card {
     border-radius: 0;
-    box-shadow: 2px 2px 0 0 #3B1F0A;
+    border: 2px solid #C89B3C;
+    background: #fffbee;
+    box-shadow: 3px 3px 0 0 #3B1F0A;
+}
+
+.pickup-card-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    line-height: 2;
+    letter-spacing: 0.04em;
+}
+
+.pickup-card-avatar {
+    border-radius: 0;
+    border: 3px solid #C89B3C;
+    box-shadow: 3px 3px 0 0 #3B1F0A;
+    image-rendering: pixelated;
+}
+
+.pickup-card-avatar img {
+    border-radius: 0;
+    image-rendering: pixelated;
+}
+
+.pickup-card-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    line-height: 1.8;
+    color: #3B1F0A;
+}
+
+.pickup-card-name--muted {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.78rem;
+}
+
+.pickup-card-sub {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    color: #7a5c30;
+}
+
+.pickup-card-link {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.42rem;
+    line-height: 1.8;
+    color: #B03020;
 }

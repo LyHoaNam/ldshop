@@ -1,6 +1,6 @@
 import { doc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
-import type { DailyPickupPerson } from '../types';
+import type { DailyPickupPerson, DailySelectedStore } from '../types';
 
 const dailyRef = () => doc(db, 'app', 'dailyState');
 
@@ -13,6 +13,7 @@ export async function resetToday(): Promise<void> {
     date: todayKey(),
     orderLink: '',
     pickupPerson: null,
+    selectedStore: null,
     lastResetAt: serverTimestamp(),
   });
 }
@@ -23,4 +24,8 @@ export async function setOrderLink(link: string): Promise<void> {
 
 export async function setPickupPerson(person: DailyPickupPerson): Promise<void> {
   await updateDoc(dailyRef(), { pickupPerson: person });
+}
+
+export async function setSelectedStore(store: DailySelectedStore): Promise<void> {
+  await updateDoc(dailyRef(), { selectedStore: store });
 }

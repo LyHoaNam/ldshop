@@ -588,47 +588,103 @@ body {
 .daily-banner {
     max-width: 1200px;
     margin: 1rem auto 0;
-    padding: 1rem;
+    padding: 0.75rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+    gap: 0.75rem;
     background: rgba(255, 248, 231, 0.96);
     border: 3px solid #FFCD00;
     color: #5C3A1E;
 }
 
-.daily-info {
+/* ── Pickup card (store or person) ── */
+.pickup-card {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    font-weight: 700;
-}
-
-.daily-label {
-    color: #B03020;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-}
-
-.daily-info a {
-    color: #B03020;
-    text-decoration: underline;
-}
-
-.pickup-person {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-}
-
-.pickup-person img {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 2px solid #C89B3C;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem;
     background: #FFF8E7;
-    object-fit: cover;
+    border: 2px solid #FFCD00;
+}
+
+.pickup-card-label {
+    color: #B03020;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.pickup-card-body {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.pickup-card-avatar {
+    width: 56px;
+    height: 56px;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #EDD9A3;
+    border: 2px solid #C89B3C;
+    overflow: hidden;
+}
+
+.pickup-card-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pickup-card-avatar--empty {
+    background: #f5ecd4;
+    opacity: 0.7;
+}
+
+.pickup-card-emoji {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.pickup-card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.pickup-card-name {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #3B1F0A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pickup-card-name--muted {
+    color: #9b7a4a;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.pickup-card-sub {
+    font-size: 0.78rem;
+    color: #7a5c30;
+    font-weight: 600;
+}
+
+.pickup-card-link {
+    font-size: 0.78rem;
+    color: #B03020;
+    font-weight: 700;
+    text-decoration: underline;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .admin-login-row {

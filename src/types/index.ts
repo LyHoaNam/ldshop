@@ -25,10 +25,19 @@ export interface DailyPickupPerson {
   setAt: Timestamp;
 }
 
+export interface DailySelectedStore {
+  id: string;
+  name: string;
+  emoji: string;
+  avatar: string;
+  setAt: Timestamp;
+}
+
 export interface DailyState {
   date: string;
   orderLink: string;
   pickupPerson: DailyPickupPerson | null;
+  selectedStore: DailySelectedStore | null;
   lastResetAt: Timestamp | null;
 }
 

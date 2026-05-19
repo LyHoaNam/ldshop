@@ -5,7 +5,7 @@ import { RaceLane } from './RaceLane';
 import { WinnerModal } from './WinnerModal';
 import { incrementRunnerWins } from '../../services/runners';
 import { incrementStoreWins } from '../../services/stores';
-import { setPickupPerson } from '../../services/dailyState';
+import { setPickupPerson, setSelectedStore } from '../../services/dailyState';
 
 interface RaceTrackProps {
   participants: Participant[];
@@ -57,6 +57,13 @@ export function RaceTrack({
       }).catch(console.error);
     } else {
       incrementStoreWins(winner.id).catch(console.error);
+      setSelectedStore({
+        id: winner.id,
+        name: winner.name,
+        emoji: winner.emoji ?? '🍚',
+        avatar: winner.avatar ?? '',
+        setAt: null as never,
+      }).catch(console.error);
     }
   }, [winner, mode]);
 
