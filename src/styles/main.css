@@ -513,6 +513,155 @@ body {
     border-radius: 6px;
 }
 
+/* Vote store checkmark */
+.vote-store-check {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-size: 1.1rem;
+    color: #4CAF50;
+    font-weight: 700;
+}
+
+/* Multi-vote mode badge */
+.vote-multi-badge {
+    display: inline-block;
+    background: #FFCD00;
+    color: #8B4513;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.2rem 0.65rem;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+}
+
+/* Profile chip shown after runner is selected */
+.vote-profile-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #C89B3C;
+    border: 2px solid #B03020;
+    border-radius: 999px;
+    padding: 0.3rem 0.7rem 0.3rem 0.35rem;
+}
+
+.vote-profile-chip-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: #FFFFEB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.vote-profile-chip-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.vote-profile-chip-name {
+    font-weight: 700;
+    color: #8B4513;
+    font-size: 0.875rem;
+}
+
+.vote-profile-chip-change {
+    background: none;
+    border: none;
+    color: #B03020;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+    font-family: inherit;
+    margin-left: 0.15rem;
+}
+
+.vote-profile-chip-change:hover {
+    color: #8B4513;
+}
+
+/* Live vote result tally */
+.vote-result-tally {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: #FFF8E7;
+    border: 2px solid #C89B3C;
+    border-radius: 8px;
+}
+
+.vote-result-tally h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #8B4513;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.vote-tally-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.vote-tally-row:last-child {
+    margin-bottom: 0;
+}
+
+.vote-tally-medal {
+    width: 1.5rem;
+    text-align: center;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+}
+
+.vote-tally-store {
+    width: 130px;
+    font-weight: 600;
+    color: #8B4513;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.vote-tally-bar-wrap {
+    flex: 1;
+    height: 10px;
+    background: #EDD9A3;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.vote-tally-bar {
+    height: 100%;
+    background: #B03020;
+    border-radius: 999px;
+    transition: width 0.4s ease;
+    min-width: 4px;
+}
+
+.vote-tally-count {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #8B4513;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 4rem;
+    text-align: right;
+}
+
 /* Add Racer Form */
 .add-racer-form {
     background: #FFF8E7;

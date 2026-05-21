@@ -18,7 +18,12 @@ export async function resetToday(): Promise<void> {
     voteModeEnabled: false,
     voteStatus: 'open',
     voteWinnerStore: null,
+    allowMultipleVotes: false,
   });
+}
+
+export async function setAllowMultipleVotes(enabled: boolean): Promise<void> {
+  await updateDoc(dailyRef(), { allowMultipleVotes: enabled });
 }
 
 export async function setVoteMode(enabled: boolean): Promise<void> {

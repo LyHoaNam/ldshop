@@ -33,7 +33,6 @@ export const MIN_RACERS = 2;
 export const MAX_RACERS = 8;
 
 export const STORAGE_KEYS = {
-  browserId: 'ldshop_browser_id',
   myRequests: 'ldshop_my_requests',
 };
 

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useStores } from '../../hooks/useStores';
 import { useSettings } from '../../hooks/useSettings';
-import { useSurvey } from '../../hooks/useSurvey';
 import { useDailyState } from '../../hooks/useDailyState';
 import { useStoreVote } from '../../hooks/useStoreVote';
 import { deleteStore } from '../../services/stores';
@@ -15,7 +14,6 @@ import type { Participant } from '../../types';
 export function StoreManagement() {
   const { stores } = useStores();
   const { settings } = useSettings();
-  const { votes } = useSurvey();
   const { dailyState } = useDailyState();
   const { votes: storeVotes } = useStoreVote();
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -34,15 +32,6 @@ export function StoreManagement() {
     .filter((s) => selectedIds.has(s.id))
     .map((s) => ({ id: s.id, name: s.name, avatar: s.avatar, emoji: s.emoji }));
 
-  // tally survey votes per store
-  const voteCounts = votes.reduce<Record<string, number>>((acc, v) => {
-    acc[v.storeId] = (acc[v.storeId] ?? 0) + 1;
-    return acc;
-  }, {});
-  const recommended = [...stores]
-    .filter((s) => voteCounts[s.id])
-    .sort((a, b) => (voteCounts[b.id] ?? 0) - (voteCounts[a.id] ?? 0));
-
   return (
     <section className="racer-management admin-only">
       <h2>Quan ly quan an</h2>
@@ -52,22 +41,6 @@ export function StoreManagement() {
             label: 'Chon quan an hom nay',
             content: (
               <>
-                {recommended.length > 0 && (
-                  <>
-                    <h3>Danh sach quan user recommend</h3>
-                    <div className="racer-grid">
-                      {recommended.map((s) => (
-                        <StoreCard
-                          key={s.id}
-                          store={s}
-                          selectable
-                          selected={selectedIds.has(s.id)}
-                          onToggle={() => toggle(s.id)}
-                        />
-                      ))}
-                    </div>
-                  </>
-                )}
                 <h3>Chon quan an hom nay</h3>
                 <div className="racer-grid">
                   {stores.map((s) => (

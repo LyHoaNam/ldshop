@@ -10,6 +10,7 @@ import {
   setVoteMode,
   closeVotingWithWinner,
   publishVoteWinner,
+  setAllowMultipleVotes,
 } from '../../services/dailyState';
 import { serverTimestamp } from 'firebase/firestore';
 import { SettingsModal } from '../settings/SettingsModal';
@@ -28,6 +29,7 @@ export function AdminTools() {
   const voteModeEnabled = dailyState?.voteModeEnabled ?? false;
   const voteStatus = dailyState?.voteStatus ?? 'open';
   const voteWinner = dailyState?.voteWinnerStore ?? null;
+  const allowMultipleVotes = dailyState?.allowMultipleVotes ?? false;
 
   // Tally votes per store
   const tally = stores
@@ -91,6 +93,14 @@ export function AdminTools() {
     try {
       await setVoteMode(!voteModeEnabled);
       setVoteLink('');
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleToggleAllowMultipleVotes = async () => {
+    try {
+      await setAllowMultipleVotes(!allowMultipleVotes);
     } catch (e) {
       console.error(e);
     }
@@ -179,6 +189,16 @@ export function AdminTools() {
             >
               {voteModeEnabled ? 'Tat vote mode' : 'Bat vote mode'}
             </button>
+
+            {voteModeEnabled && voteStatus === 'open' && (
+              <button
+                className={`btn ${allowMultipleVotes ? 'btn-primary' : 'btn-secondary'}`}
+                onClick={handleToggleAllowMultipleVotes}
+                title="Cho phep moi nguoi vote nhieu quan an cung luc"
+              >
+                {allowMultipleVotes ? '✓ Vote nhieu quan' : 'Vote nhieu quan'}
+              </button>
+            )}
 
             {voteModeEnabled && voteStatus === 'open' && (
               <button className="btn btn-primary" onClick={handleCloseVoting}>

@@ -42,6 +42,7 @@ export interface DailyState {
   voteModeEnabled: boolean;
   voteStatus: 'open' | 'closed';
   voteWinnerStore: DailySelectedStore | null;
+  allowMultipleVotes: boolean;
 }
 
 export interface StoreVoteEntry {
@@ -52,19 +53,6 @@ export interface StoreVoteEntry {
   storeName: string;
   storeEmoji: string;
   createdAt: Timestamp | null;
-}
-
-export interface SurveyVote {
-  id: string;
-  browserId: string;
-  storeId: string;
-  storeName: string;
-  createdAt: Timestamp;
-}
-
-export interface SurveyDay {
-  date: string;
-  votes: SurveyVote[];
 }
 
 export interface StoreRequest {

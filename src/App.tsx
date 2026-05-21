@@ -1,7 +1,6 @@
 import { AdminProvider } from './context/AdminContext';
 import { RaceModeProvider } from './context/RaceModeContext';
 import { AppHeader } from './components/layout/AppHeader';
-import { AppSidebar } from './components/layout/AppSidebar';
 import { PickupAnnouncement } from './components/layout/PickupAnnouncement';
 import { UserStoreSection } from './components/stores/UserStoreSection';
 import { StoreManagement } from './components/stores/StoreManagement';
@@ -16,14 +15,15 @@ function AppMain() {
 
   const voteModeEnabled = dailyState?.voteModeEnabled ?? false;
   const voteStatus = dailyState?.voteStatus ?? 'open';
+  const allowMultipleVotes = dailyState?.allowMultipleVotes ?? false;
 
   return (
     <>
       {!isAdmin && <PickupAnnouncement />}
-      {!isAdmin && voteModeEnabled && (
-        <StoreVoteSection voteStatus={voteStatus} />
-      )}
       {!isAdmin && !voteModeEnabled && <UserStoreSection />}
+      {!isAdmin && voteModeEnabled && (
+        <StoreVoteSection voteStatus={voteStatus} allowMultipleVotes={allowMultipleVotes} />
+      )}
       {isAdmin && <StoreManagement />}
       {isAdmin && <RunnerManagement />}
     </>
@@ -39,11 +39,10 @@ export default function App() {
           className="container-bg"
           style={{ backgroundImage: "url('/images/bg.gif')" }}
         >
-          <div className="container app-shell">
+          <div className="container">
             <main className="app-main">
               <AppMain />
             </main>
-            <AppSidebar />
           </div>
         </div>
       </RaceModeProvider>
