@@ -10,7 +10,7 @@ export function DailyBanner() {
   return (
     <div className="daily-banner" id="dailyBanner">
       {/* Store card */}
-      <div className="pickup-card">
+      <div className={`pickup-card${store ? ' pickup-card--active' : ''}`}>
         <span className="pickup-card-label">Quan an hom nay</span>
         {store ? (
           <div className="pickup-card-body">
@@ -63,7 +63,7 @@ export function DailyBanner() {
       </div>
 
       {/* Pickup person card */}
-      <div className="pickup-card">
+      <div className={`pickup-card${pickup ? ' pickup-card--active' : ''}`}>
         <span className="pickup-card-label">Nguoi nhan com</span>
         {pickup ? (
           <div className="pickup-card-body">

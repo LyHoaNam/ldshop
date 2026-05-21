@@ -39,6 +39,19 @@ export interface DailyState {
   pickupPerson: DailyPickupPerson | null;
   selectedStore: DailySelectedStore | null;
   lastResetAt: Timestamp | null;
+  voteModeEnabled: boolean;
+  voteStatus: 'open' | 'closed';
+  voteWinnerStore: DailySelectedStore | null;
+}
+
+export interface StoreVoteEntry {
+  runnerId: string;
+  runnerName: string;
+  runnerAvatar: string;
+  storeId: string;
+  storeName: string;
+  storeEmoji: string;
+  createdAt: Timestamp | null;
 }
 
 export interface SurveyVote {
