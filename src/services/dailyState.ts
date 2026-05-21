@@ -15,6 +15,31 @@ export async function resetToday(): Promise<void> {
     pickupPerson: null,
     selectedStore: null,
     lastResetAt: serverTimestamp(),
+    voteModeEnabled: false,
+    voteStatus: 'open',
+    voteWinnerStore: null,
+  });
+}
+
+export async function setVoteMode(enabled: boolean): Promise<void> {
+  await updateDoc(dailyRef(), {
+    voteModeEnabled: enabled,
+    voteStatus: 'open',
+    voteWinnerStore: null,
+  });
+}
+
+export async function closeVotingWithWinner(winner: DailySelectedStore): Promise<void> {
+  await updateDoc(dailyRef(), {
+    voteStatus: 'closed',
+    voteWinnerStore: winner,
+  });
+}
+
+export async function publishVoteWinner(winner: DailySelectedStore, link: string): Promise<void> {
+  await updateDoc(dailyRef(), {
+    selectedStore: winner,
+    orderLink: link,
   });
 }
 
