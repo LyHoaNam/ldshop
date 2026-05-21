@@ -42,6 +42,7 @@ export interface DailyState {
   voteModeEnabled: boolean;
   voteStatus: 'open' | 'closed';
   voteWinnerStore: DailySelectedStore | null;
+  allowMultipleVotes: boolean;
 }
 
 export interface StoreVoteEntry {

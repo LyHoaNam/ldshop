@@ -15,14 +15,15 @@ function AppMain() {
 
   const voteModeEnabled = dailyState?.voteModeEnabled ?? false;
   const voteStatus = dailyState?.voteStatus ?? 'open';
+  const allowMultipleVotes = dailyState?.allowMultipleVotes ?? false;
 
   return (
     <>
       {!isAdmin && <PickupAnnouncement />}
-      {!isAdmin && voteModeEnabled && (
-        <StoreVoteSection voteStatus={voteStatus} />
-      )}
       {!isAdmin && !voteModeEnabled && <UserStoreSection />}
+      {!isAdmin && voteModeEnabled && (
+        <StoreVoteSection voteStatus={voteStatus} allowMultipleVotes={allowMultipleVotes} />
+      )}
       {isAdmin && <StoreManagement />}
       {isAdmin && <RunnerManagement />}
     </>
@@ -38,7 +39,7 @@ export default function App() {
           className="container-bg"
           style={{ backgroundImage: "url('/images/bg.gif')" }}
         >
-          <div className="container app-shell">
+          <div className="container">
             <main className="app-main">
               <AppMain />
             </main>

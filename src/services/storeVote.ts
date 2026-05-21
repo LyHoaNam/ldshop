@@ -1,10 +1,15 @@
-import { doc, updateDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, updateDoc, setDoc, deleteField, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 
 function todayKey(): string {
   return new Date().toISOString().split('T')[0];
 }
 
+/**
+ * Cast or update a vote.
+ * Single-vote mode: key = runnerId (overwrites previous vote for that runner).
+ * Multi-vote mode:  key = runnerId_storeId (one entry per runner-store pair).
+ */
 export async function castRunnerVote(
   runnerId: string,
   runnerName: string,
@@ -12,7 +17,9 @@ export async function castRunnerVote(
   storeId: string,
   storeName: string,
   storeEmoji: string,
+  multiVote = false,
 ): Promise<void> {
+  const key = multiVote ? `${runnerId}_${storeId}` : runnerId;
   const ref = doc(db, 'storeVotes', todayKey());
   const vote = {
     runnerId,
@@ -24,8 +31,15 @@ export async function castRunnerVote(
     createdAt: serverTimestamp(),
   };
   try {
-    await updateDoc(ref, { [`votes.${runnerId}`]: vote });
+    await updateDoc(ref, { [`votes.${key}`]: vote });
   } catch {
-    await setDoc(ref, { date: todayKey(), votes: { [runnerId]: vote } });
+    await setDoc(ref, { date: todayKey(), votes: { [key]: vote } });
   }
+}
+
+/** Remove a single store vote in multi-vote mode. */
+export async function removeRunnerVote(runnerId: string, storeId: string): Promise<void> {
+  const key = `${runnerId}_${storeId}`;
+  const ref = doc(db, 'storeVotes', todayKey());
+  await updateDoc(ref, { [`votes.${key}`]: deleteField() });
 }
