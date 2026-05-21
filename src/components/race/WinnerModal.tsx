@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Confetti } from './Confetti';
+import { setOrderLink } from '../../services/dailyState';
 import type { Participant, AppSettings, RaceMode } from '../../types';
 
 interface WinnerModalProps {
@@ -9,9 +11,27 @@ interface WinnerModalProps {
 }
 
 export function WinnerModal({ winner, mode, settings, onClose }: WinnerModalProps) {
+  const [linkInput, setLinkInput] = useState('');
+  const [saving, setSaving] = useState(false);
+
   if (!winner) return null;
 
   const isPeople = mode === 'people';
+  const isStores = mode === 'stores';
+
+  const handleClose = async () => {
+    if (isStores) {
+      setSaving(true);
+      try {
+        await setOrderLink(linkInput);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setSaving(false);
+      }
+    }
+    onClose();
+  };
 
   return (
     <>
@@ -32,9 +52,28 @@ export function WinnerModal({ winner, mode, settings, onClose }: WinnerModalProp
               ? 'Hom nay ban la nguoi nhan com.'
               : 'Day la quan an duoc chon hom nay!'}
           </div>
+          {isStores && (
+            <div className="form-group" style={{ marginTop: '1.25rem', textAlign: 'left' }}>
+              <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: 600 }}>
+                Link dat com (bat buoc):
+              </label>
+              <input
+                type="url"
+                value={linkInput}
+                onChange={(e) => setLinkInput(e.target.value)}
+                placeholder="https://..."
+                style={{ width: '100%', boxSizing: 'border-box' }}
+                autoFocus
+              />
+            </div>
+          )}
           <div className="button-group" style={{ marginTop: '1.5rem' }}>
-            <button className="btn btn-primary" onClick={onClose}>
-              Dong
+            <button
+              className="btn btn-primary"
+              onClick={handleClose}
+              disabled={saving || (isStores && !linkInput.trim())}
+            >
+              {saving ? 'Dang luu...' : 'Dong'}
             </button>
           </div>
         </div>
