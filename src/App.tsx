@@ -1,7 +1,6 @@
 import { AdminProvider } from './context/AdminContext';
 import { RaceModeProvider } from './context/RaceModeContext';
 import { AppHeader } from './components/layout/AppHeader';
-import { AppSidebar } from './components/layout/AppSidebar';
 import { PickupAnnouncement } from './components/layout/PickupAnnouncement';
 import { UserStoreSection } from './components/stores/UserStoreSection';
 import { StoreManagement } from './components/stores/StoreManagement';
@@ -43,7 +42,6 @@ export default function App() {
             <main className="app-main">
               <AppMain />
             </main>
-            <AppSidebar />
           </div>
         </div>
       </RaceModeProvider>

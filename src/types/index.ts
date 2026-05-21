@@ -54,19 +54,6 @@ export interface StoreVoteEntry {
   createdAt: Timestamp | null;
 }
 
-export interface SurveyVote {
-  id: string;
-  browserId: string;
-  storeId: string;
-  storeName: string;
-  createdAt: Timestamp;
-}
-
-export interface SurveyDay {
-  date: string;
-  votes: SurveyVote[];
-}
-
 export interface StoreRequest {
   id: string;
   name: string;
